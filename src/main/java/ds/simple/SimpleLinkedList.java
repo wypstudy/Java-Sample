@@ -91,9 +91,48 @@ public class SimpleLinkedList<E> {
         return size == 0;
     }
 
-    public boolean add(E item) {
+    public void addFirst(E item) {
+        linkFirst(item);
+    }
+
+    public void addLast(E item) {
         linkLast(item);
-        return true;
+    }
+
+    public E getFirst() {
+        if (!empty()) {
+            return first.next.item;
+        }
+        return null;
+    }
+
+    public E getLast() {
+        if (!empty()) {
+            return last.pre.item;
+        }
+        return null;
+    }
+
+    public E removeFirst() {
+        if (!empty()) {
+            E item = first.next.item;
+            unlinkFirst();
+            return item;
+        }
+        return null;
+    }
+
+    public E removeLast() {
+        if (!empty()) {
+            E item = last.pre.item;
+            unlinkLast();
+            return item;
+        }
+        return null;
+    }
+
+    public void add(E item) {
+        addLast(item);
     }
 
     public boolean add(int index, E item) {
@@ -118,6 +157,7 @@ public class SimpleLinkedList<E> {
         }
         return null;
     }
+
 
     public int indexOf(E item) {
         if (item == null) {
