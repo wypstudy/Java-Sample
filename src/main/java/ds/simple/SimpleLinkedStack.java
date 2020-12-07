@@ -1,6 +1,6 @@
 package ds.simple;
 
-public class SimpleStack<E> {
+public class SimpleLinkedStack<E> {
     static class Node<E> {
         E item;
         Node<E> next;
@@ -14,7 +14,7 @@ public class SimpleStack<E> {
     private Node<E> head;
     private int size;
 
-    public SimpleStack() {
+    public SimpleLinkedStack() {
         size = 0;
         head = new Node<>(null);
     }
@@ -59,7 +59,7 @@ public class SimpleStack<E> {
     }
 
     public static void main(String[] args) {
-        SimpleStack stack = new SimpleStack<Float>();
+        SimpleLinkedStack stack = new SimpleLinkedStack<Float>();
         System.out.println(stack.push(1.1f));
         System.out.println(stack.push(2.2f));
         System.out.println(stack.push(3.3f));

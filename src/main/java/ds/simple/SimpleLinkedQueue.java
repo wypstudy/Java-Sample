@@ -4,7 +4,7 @@ package ds.simple;
  * Date  :  2020/12/7
  * Author:  YiPing, Wei
  **/
-public class SimpleQueue<E> {
+public class SimpleLinkedQueue<E> {
     static class Node<E> {
         private E item;
         private Node<E> next;
@@ -18,7 +18,7 @@ public class SimpleQueue<E> {
     private Node<E> head, tail;
     private int size;
 
-    public SimpleQueue() {
+    public SimpleLinkedQueue() {
         size = 0;
         head = tail = new Node<E>(null);
     }
@@ -62,7 +62,7 @@ public class SimpleQueue<E> {
     }
 
     public static void main(String[] args) {
-        SimpleQueue<Float> q = new SimpleQueue<>();
+        SimpleLinkedQueue<Float> q = new SimpleLinkedQueue<>();
         System.out.println(q.add(1.1f));
         System.out.println(q.add(2.2f));
         System.out.println(q.add(3.3f));
