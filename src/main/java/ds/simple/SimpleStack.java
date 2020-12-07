@@ -1,6 +1,6 @@
-package data.structrue;
+package ds.simple;
 
-public class SStack<E> {
+public class SimpleStack<E> {
     static class Node<E> {
         E item;
         Node<E> next;
@@ -14,7 +14,7 @@ public class SStack<E> {
     private Node<E> head;
     private int size;
 
-    public SStack() {
+    public SimpleStack() {
         size = 0;
         head = new Node<>(null);
     }
@@ -59,7 +59,7 @@ public class SStack<E> {
     }
 
     public static void main(String[] args) {
-        SStack stack = new SStack<Float>();
+        SimpleStack stack = new SimpleStack<Float>();
         System.out.println(stack.push(1.1f));
         System.out.println(stack.push(2.2f));
         System.out.println(stack.push(3.3f));

@@ -1,10 +1,10 @@
-package data.structrue;
+package ds.simple;
 
 /**
  * Date  :  2020/12/7
  * Author:  YiPing, Wei
  **/
-public class SQueue<E> {
+public class SimpleQueue<E> {
     static class Node<E> {
         private E item;
         private Node<E> next;
@@ -18,7 +18,7 @@ public class SQueue<E> {
     private Node<E> head, tail;
     private int size;
 
-    public SQueue() {
+    public SimpleQueue() {
         size = 0;
         head = tail = new Node<E>(null);
     }
@@ -62,7 +62,7 @@ public class SQueue<E> {
     }
 
     public static void main(String[] args) {
-        SQueue<Float> q = new SQueue<>();
+        SimpleQueue<Float> q = new SimpleQueue<>();
         System.out.println(q.add(1.1f));
         System.out.println(q.add(2.2f));
         System.out.println(q.add(3.3f));
