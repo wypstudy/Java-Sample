@@ -1,25 +1,22 @@
 package data.structrue;
 
-import java.util.Arrays;
-
 public class SStack<E> {
-    private Object[] data;
+    static class Node<E> {
+        E item;
+        Node<E> next;
+
+        Node(E item) {
+            this.item = item;
+            next = null;
+        }
+    }
+
+    private Node<E> head;
     private int size;
 
-    SStack() {
-        this(2);
-    }
-
-    SStack(int capacity) {
+    public SStack() {
         size = 0;
-        data = new Object[capacity];
-    }
-
-    // 栈扩容
-    private synchronized void ensureCapacity(int capacity) {
-        if (capacity > data.length) {
-            data = Arrays.copyOf(data, capacity);
-        }
+        head = new Node<>(null);
     }
 
     // 栈大小
@@ -33,32 +30,32 @@ public class SStack<E> {
     }
 
     // 入栈并返回入栈元素
-    public synchronized E push(E item) {
-        ensureCapacity(size + 1);
-        data[size++] = item;
+    public E push(E item) {
+        Node<E> first = new Node<>(item);
+        first.next = head.next;
+        head.next = first;
+        size++;
         return item;
     }
 
     // 出栈并返回出栈元素
-    public synchronized E pop() {
-        if (!empty())
-            return (E) data[--size];
+    public  E pop() {
+        if (!empty()) {
+            Node<E> first = head.next;
+            E item = first.item;
+            head.next = first.next;
+            first.next = first;
+            size--;
+            return item;
+        }
         return null;
     }
 
     // 返回栈顶元素
-    public synchronized E peek() {
+    public E peek() {
         if (!empty())
-            return (E) data[size - 1];
+            return head.next.item;
         return null;
-    }
-
-    // 查询距离栈顶最近的元素实体索引
-    public synchronized int search(E item) {
-        for (int i = size - 1; i >= 0; i--)
-            if (item.equals(data[i]))
-                return size-i;
-        return -1;
     }
 
     public static void main(String[] args) {
@@ -66,12 +63,12 @@ public class SStack<E> {
         System.out.println(stack.push(1.1f));
         System.out.println(stack.push(2.2f));
         System.out.println(stack.push(3.3f));
-        System.out.println(stack.search(3.3f));
+        System.out.println(stack.size());
         System.out.println(stack.pop());
-        System.out.println(stack.search(3.3f));
         System.out.println(stack.pop());
         System.out.println(stack.peek());
         System.out.println(stack.pop());
         System.out.println(stack.pop());
+        System.out.println(stack.size());
     }
 }
