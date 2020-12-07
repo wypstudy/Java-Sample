@@ -87,9 +87,7 @@ public class SimpleArrayList<E> {
         return indexOf(item) >= 0;
     }
 
-    public E remove(Object item) {
-        return fastRemove(indexOf(item));
-    }
+
 
     @SuppressWarnings("unchecked")
     public E fastRemove(int index) {
@@ -99,6 +97,10 @@ public class SimpleArrayList<E> {
             return (E) data[index];
         }
         return null;
+    }
+
+    public E remove(Object item) {
+        return fastRemove(indexOf(item));
     }
 
     @Override
@@ -125,11 +127,11 @@ public class SimpleArrayList<E> {
         System.out.println(l.indexOf('E'));
         l.remove('B');
         l.remove('C');
-        System.out.println(l.indexOf('E'));
+        System.out.println(l);
         l.remove('E');
         l.fastRemove(0);
         l.fastRemove(0);
-        System.out.println(l.indexOf('E'));
+        System.out.println(l);
         System.out.println(l.size());
     }
 }
