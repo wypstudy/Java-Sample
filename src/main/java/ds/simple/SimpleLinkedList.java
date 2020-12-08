@@ -28,14 +28,17 @@ public class SimpleLinkedList<E> {
         last.pre = first;
     }
 
+    // 链表头插入
     private void linkFirst(E item) {
         linkBefore(item, first.next);
     }
 
+    // 链表尾插入
     private void linkLast(E item) {
         linkBefore(item, last);
     }
 
+    // 在节点next前插入
     private void linkBefore(E item, Node<E> next) {
         Node<E> pre = next.pre;
         Node<E> node = new Node<>(pre, item, next);
@@ -44,14 +47,17 @@ public class SimpleLinkedList<E> {
         size++;
     }
 
+    // 链表头删除
     private void unlinkFirst() {
         unlink(first.next);
     }
 
+    // 链表尾删除
     private void unlinkLast() {
         unlink(last.pre);
     }
 
+    // 节点node删除
     private void unlink(Node<E> node) {
         Node<E> pre = node.pre;
         Node<E> next = node.next;
@@ -62,6 +68,7 @@ public class SimpleLinkedList<E> {
         size--;
     }
 
+    // 获取第index个节点
     private Node<E> node(int index) {
         // 该方法必须保证index在范围内
         if (index < size >> 1) {
@@ -79,26 +86,32 @@ public class SimpleLinkedList<E> {
         }
     }
 
+    // 判断索引合法
     private boolean rangeCheck(int index) {
         return index >= 0 && index < size;
     }
 
+    // 返回List大小
     public int size() {
         return size;
     }
 
+    // 返回List是否为空
     public boolean empty() {
         return size == 0;
     }
 
+    // 链表头插入
     public void addFirst(E item) {
         linkFirst(item);
     }
 
+    // 链表尾插入
     public void addLast(E item) {
         linkLast(item);
     }
 
+    // 获取表头值
     public E getFirst() {
         if (!empty()) {
             return first.next.item;
@@ -106,6 +119,7 @@ public class SimpleLinkedList<E> {
         return null;
     }
 
+    // 获取表尾值
     public E getLast() {
         if (!empty()) {
             return last.pre.item;
@@ -113,6 +127,7 @@ public class SimpleLinkedList<E> {
         return null;
     }
 
+    // 删除表头并返回
     public E removeFirst() {
         if (!empty()) {
             E item = first.next.item;
@@ -122,6 +137,7 @@ public class SimpleLinkedList<E> {
         return null;
     }
 
+    // 删除表尾部并返回
     public E removeLast() {
         if (!empty()) {
             E item = last.pre.item;
@@ -131,10 +147,12 @@ public class SimpleLinkedList<E> {
         return null;
     }
 
+    // 表尾添加元素
     public void add(E item) {
         addLast(item);
     }
 
+    // 表指定位置添加元素
     public boolean add(int index, E item) {
         if (rangeCheck(index)) {
             linkBefore(item, node(index));
@@ -143,6 +161,7 @@ public class SimpleLinkedList<E> {
         return false;
     }
 
+    // 表指定位置元素获取
     public E get(int index) {
         if (rangeCheck(index)) {
             return node(index).item;
@@ -150,6 +169,7 @@ public class SimpleLinkedList<E> {
         return null;
     }
 
+    // 表指定位置元素值修改
     public E set(int index, E item) {
         if (rangeCheck(index)) {
             node(index).item = item;
@@ -158,7 +178,7 @@ public class SimpleLinkedList<E> {
         return null;
     }
 
-
+    // 指定元素值第一次出现表索引
     public int indexOf(E item) {
         if (item == null) {
             Node<E> x = first.next;
@@ -178,10 +198,12 @@ public class SimpleLinkedList<E> {
         return -1;
     }
 
+    // 判断表里是否有元素
     public boolean contains(E item) {
         return indexOf(item) >= 0;
     }
 
+    // 根据索引删除表
     public E fastRemove(int index) {
         if (rangeCheck(index)) {
             Node<E> x = node(index);
@@ -191,6 +213,7 @@ public class SimpleLinkedList<E> {
         return null;
     }
 
+    // 根据元素值删除表
     public E remove(E item) {
         return fastRemove(indexOf(item));
     }
