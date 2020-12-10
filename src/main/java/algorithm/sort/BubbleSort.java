@@ -2,6 +2,12 @@ package algorithm.sort;
 
 import java.util.Comparator;
 
+/**
+ * 时间复杂度 O(n) ~ O(n^2)
+ * 空间复杂度 O(1)
+ * 稳定
+ * In-place
+ */
 public class BubbleSort {
     public static <T> T[] sort(T[] array, Comparator<T> cpr) {
         int len = array.length, cmp;

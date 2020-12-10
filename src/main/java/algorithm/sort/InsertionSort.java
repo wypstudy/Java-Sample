@@ -3,39 +3,37 @@ package algorithm.sort;
 import java.util.Comparator;
 
 /**
- * 时间复杂度 O(n^2) ~ O(n^2)
+ * Date  :  2020/12/10
+ * Author:  YiPing, Wei
+ * 时间复杂度 O(n) ~ O(n^2)
  * 空间复杂度 O(1)
- * 不稳定
+ * 稳定
  * In-place
- */
-public class SelectionSort {
+ **/
+public class InsertionSort {
     public static <T> T[] sort(T[] array, Comparator<T> cpr) {
-        int len = array.length, index, cmp;
+        int len = array.length, j;
         T tmp;
-        for (int i = 0; i < len - 1; i++) {
+        for (int i = 1; i < len; i++) {
             tmp = array[i];
-            index = i;
-            for (int j = i + 1; j < len; j++) {
-                cmp = cpr.compare(tmp, array[j]);
-                if (cmp > 0) {
-                    tmp = array[j];
-                    index = j;
-                }
+            j = i;
+            while (j > 0 && cpr.compare(tmp,array[j-1]) < 0) {
+                array[j] = array[j-1];
+                j--;
             }
-            if (index != i) {
-                tmp = array[index];
-                array[index] = array[i];
-                array[i] = tmp;
+            if (j != i) {
+                array[j] = tmp;
             }
         }
         return array;
     }
+
     public static <T extends Comparable<T>> T[] sort(T[] array) {
         return sort(array, Comparable::compareTo);
     }
 
     public static void main(String[] args) {
-        Integer[] array = {3, 2, 4, 5, 2};
+        Integer[] array = {3, 2, 4, 5, 3};
         System.out.print("{");
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i]);

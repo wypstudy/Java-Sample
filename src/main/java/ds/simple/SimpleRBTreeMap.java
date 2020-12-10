@@ -10,14 +10,14 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
     private static boolean BLACK = true;
     private static boolean RED = false;
 
-    static class TreeNode<K, V> {
+    static class Node<K, V> {
 
         K key;
         V value;
         boolean color;
-        TreeNode<K, V> parent, left, right;
+        Node<K, V> parent, left, right;
 
-        TreeNode(K key, V value, boolean color, TreeNode<K, V> parent, TreeNode<K, V> left, TreeNode<K, V> right) {
+        Node(K key, V value, boolean color, Node<K, V> parent, Node<K, V> left, Node<K, V> right) {
             this.key = key;
             this.value = value;
             this.color = color;
@@ -32,7 +32,7 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
         }
     }
 
-    TreeNode<K, V> root;
+    Node<K, V> root;
     int size;
 
     SimpleRBTreeMap() {
@@ -50,10 +50,10 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
 
     public void put(K key, V value) {
         int cmp;
-        TreeNode<K, V> p = search(key), e;
+        Node<K, V> p = search(key), e;
         if (p == null) {
             // 根节点插入
-            root = new TreeNode<>(key, value, BLACK, null, null, null);
+            root = new Node<>(key, value, BLACK, null, null, null);
             size++;
         } else {
             // 叶节点插入
@@ -64,7 +64,7 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
                 p.value = value;
             } else {
                 // 找不到 key 插入
-                e = new TreeNode<>(key, value, RED, p, null, null);
+                e = new Node<>(key, value, RED, p, null, null);
                 if (cmp < 0) {
                     p.left = e;
                 } else {
@@ -79,14 +79,14 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
     }
 
     public V get(K key) {
-        TreeNode<K, V> x = search(key);
+        Node<K, V> x = search(key);
         if (x != null && key.equals(x.key))
             return x.value;
         return null;
     }
 
     public V remove(K key) {
-        TreeNode<K, V> x = search(key);
+        Node<K, V> x = search(key);
         V re = null;
         if (x != null && key.equals(x.key)) {
             re = x.value;
@@ -95,14 +95,14 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
         return re;
     }
 
-    private void removeNode(TreeNode<K, V> x) {
+    private void removeNode(Node<K, V> x) {
         // TODO 完成节点删除逻辑
     }
 
     // 查找 key,找不到时返回可插入节点
-    private TreeNode<K, V> search(K key) {
+    private Node<K, V> search(K key) {
         int cmp;
-        TreeNode<K, V> p = root, e = p;
+        Node<K, V> p = root, e = p;
         Comparator<? super K> k = key;
         do {
             p = e;
@@ -120,8 +120,8 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
         return p;
     }
 
-    private void fixAdd(TreeNode<K, V> x) {
-        TreeNode<K, V> parent, grandparent, uncle;
+    private void fixAdd(Node<K, V> x) {
+        Node<K, V> parent, grandparent, uncle;
 
         // 父节点存在且父节点是红色与当前节点颜色冲突
         while ((parent = x.parent) != null && isRed(parent)) {
@@ -142,7 +142,7 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
 
                 // 情况2 叔叔节点是黑色,且当前节点是右子节点
                 if (parent.right == x) {
-                    TreeNode<K, V> tmp;
+                    Node<K, V> tmp;
                     rotateLeft(parent);
                     tmp = parent;
                     parent = x;
@@ -168,7 +168,7 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
 
                 // 情况2 叔叔节点是黑色,且当前节点是左孩子
                 if (parent.left == x) {
-                    TreeNode<K, V> tmp;
+                    Node<K, V> tmp;
                     rotateRight(parent);
                     tmp = parent;
                     parent = x;
@@ -184,23 +184,23 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
         setBlack(root);
     }
 
-    private void fixRemove(TreeNode<K, V> x) {
+    private void fixRemove(Node<K, V> x) {
         // TODO 完成删除后修复红黑树逻辑
     }
 
-    private boolean isRed(TreeNode<K, V> x) {
+    private boolean isRed(Node<K, V> x) {
         return x != null && x.color == RED;
     }
 
-    private boolean isBlack(TreeNode<K, V> x) {
+    private boolean isBlack(Node<K, V> x) {
         return x == null || x.color == BLACK;
     }
 
-    private void setRed(TreeNode<K, V> x) {
+    private void setRed(Node<K, V> x) {
         x.color = RED;
     }
 
-    private void setBlack(TreeNode<K, V> x) {
+    private void setBlack(Node<K, V> x) {
         x.color = BLACK;
     }
 
@@ -213,8 +213,8 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
      *     / \               / \
      *   ly  ry            lx  ly
      */
-    private void rotateLeft(TreeNode<K, V> x) {
-        TreeNode<K, V> y = x.right;
+    private void rotateLeft(Node<K, V> x) {
+        Node<K, V> y = x.right;
         x.right = y.left;
         if (y.left != null)
             y.left.parent = x;
@@ -241,8 +241,8 @@ public class SimpleRBTreeMap<K extends Comparator<K>, V> {
      *  / \                      / \
      * lx  rx                   rx  ry
      */
-    private void rotateRight(TreeNode<K, V> y) {
-        TreeNode<K, V> x = y.left;
+    private void rotateRight(Node<K, V> y) {
+        Node<K, V> x = y.left;
         y.left = x.right;
         if (x.right != null) {
             x.right.parent = y;
